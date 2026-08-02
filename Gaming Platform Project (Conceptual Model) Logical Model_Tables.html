@@ -1,0 +1,391 @@
+
+<style>
+#dw { font-family: var(--font-sans); padding: 16px 0; display: flex; flex-direction: column; gap: 32px; }
+.fact-group { display: flex; flex-direction: column; gap: 10px; }
+.fact-label { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-tertiary); padding-left: 4px; margin-bottom: 2px; }
+.section-note { font-size: 11px; color: var(--color-text-tertiary); padding: 6px 10px; background: var(--color-background-secondary); border-radius: 6px; border: 1px solid var(--color-border-tertiary); margin-bottom: 8px; display: inline-block; }
+.tables-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; }
+.tbl { border-radius: 10px; overflow: hidden; border: 1px solid var(--color-border-tertiary); min-width: 148px; flex: 1; }
+.tbl-header { padding: 8px 12px; font-size: 13px; font-weight: 500; }
+.tbl-body { background: var(--color-background-secondary); }
+.tbl-row { padding: 4px 12px; font-size: 12px; color: var(--color-text-secondary); display: flex; align-items: center; gap: 6px; border-top: 1px solid var(--color-border-tertiary); }
+.tbl-row.added  { color: var(--color-text-success); font-weight: 500; }
+.badge { font-size: 10px; font-weight: 500; padding: 1px 5px; border-radius: 4px; flex-shrink: 0; }
+.pk  { background: #E6F1FB; color: #185FA5; }
+.fk  { background: #EAF3DE; color: #3B6D11; }
+.sk  { background: #EEEDFE; color: #534AB7; }
+.fact      .tbl-header { background: #FAEEDA; color: #633806; }
+.dim       .tbl-header { background: #E1F5EE; color: #085041; }
+.confirmed .tbl-header { background: #E6F1FB; color: #0C447C; border-bottom: 2px solid #378ADD; }
+.divider { border: none; border-top: 1px solid var(--color-border-tertiary); margin: 0; }
+
+/* confirmed dim label */
+.conf-label { font-size: 10px; font-weight: 500; margin-left: auto; padding: 1px 6px; border-radius: 8px; background: #B5D4F4; color: #042C53; }
+
+@media (prefers-color-scheme: dark) {
+  .pk  { background: #0C447C; color: #B5D4F4; }
+  .fk  { background: #27500A; color: #C0DD97; }
+  .sk  { background: #3C3489; color: #CECBF6; }
+  .fact      .tbl-header { background: #633806; color: #FAC775; }
+  .dim       .tbl-header { background: #085041; color: #9FE1CB; }
+  .confirmed .tbl-header { background: #0C447C; color: #B5D4F4; border-bottom: 2px solid #378ADD; }
+  .conf-label { background: #185FA5; color: #E6F1FB; }
+  .tbl-row.added { color: #9FE1CB; }
+}
+</style>
+<div id="dw">
+
+  <!-- ══════ CONFIRMED DIMENSIONS (shared across all facts) ══════ -->
+  <div class="fact-group">
+    <div class="fact-label">Confirmed Dimensions — shared across all 3 facts</div>
+    <div class="tables-row">
+
+      <div class="tbl confirmed">
+        <div class="tbl-header">dim_date <span class="conf-label">confirmed</span></div>
+        <div class="tbl-body">
+          <div class="tbl-row added"><span class="badge sk">SK</span> full_date</div>
+          <div class="tbl-row">day_of_week</div>
+          <div class="tbl-row">day_name</div>
+          <div class="tbl-row">week_number</div>
+          <div class="tbl-row">month_number</div>
+          <div class="tbl-row">month_name</div>
+          <div class="tbl-row">quarter</div>
+          <div class="tbl-row">year</div>
+          <div class="tbl-row">is_weekend</div>
+          <div class="tbl-row">is_holiday</div>
+        </div>
+      </div>
+
+      <div class="tbl confirmed">
+        <div class="tbl-header">dim_user <span class="conf-label">confirmed</span></div>
+        <div class="tbl-body">
+          <div class="tbl-row"><span class="badge sk">SK</span> user_sk</div>
+          <div class="tbl-row"><span class="badge pk">SRC</span> user_id</div>
+          <div class="tbl-row">username</div>
+          <div class="tbl-row">status</div>
+          <div class="tbl-row">email</div>
+          <div class="tbl-row">phone</div>
+          <div class="tbl-row">created_at</div>
+        </div>
+      </div>
+
+      <div class="tbl confirmed">
+        <div class="tbl-header">dim_game <span class="conf-label">confirmed</span></div>
+        <div class="tbl-body">
+          <div class="tbl-row"><span class="badge sk">SK</span> game_sk</div>
+          <div class="tbl-row"><span class="badge pk">SRC</span> game_id</div>
+          <div class="tbl-row">game_name</div>
+          <div class="tbl-row added">✦ genre_name</div>
+          <div class="tbl-row">platform</div>
+          <div class="tbl-row">release_date</div>
+          <div class="tbl-row">rating</div>
+          <div class="tbl-row">price</div>
+          <div class="tbl-row">discount_percentage</div>
+          <div class="tbl-row">tax_percentage</div>
+        </div>
+      </div>
+
+      <div class="tbl confirmed">
+        <div class="tbl-header">dim_location <span class="conf-label">confirmed</span></div>
+        <div class="tbl-body">
+          <div class="tbl-row"><span class="badge sk">SK</span> location_sk</div>
+          <div class="tbl-row"><span class="badge pk">SRC</span> city_id</div>
+          <div class="tbl-row">city_name</div>
+          <div class="tbl-row">state_name</div>
+          <div class="tbl-row">country_name</div>
+          <div class="tbl-row">region</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- ══════════════ FACT 1: fact_orders ══════════════ -->
+  <div class="fact-group">
+    <div class="fact-label">Fact 1 — Orders</div>
+    <div class="tables-row">
+
+      <div class="tbl fact">
+        <div class="tbl-header">fact_orders</div>
+        <div class="tbl-body">
+          <div class="tbl-row"><span class="badge sk">SK</span> order_sk</div>
+          <div class="tbl-row"><span class="badge fk">FK</span> user_sk</div>
+          <div class="tbl-row"><span class="badge fk">FK</span> game_sk</div>
+          <div class="tbl-row"><span class="badge fk">FK</span> full_date</div>
+          <div class="tbl-row"><span class="badge fk">FK</span> location_sk</div>
+          <div class="tbl-row"><span class="badge fk">FK</span> payment_sk</div>
+          <div class="tbl-row"><span class="badge pk">SRC</span> order_id</div>
+          <div class="tbl-row">order_date</div>
+          <div class="tbl-row">price</div>
+          <div class="tbl-row">quantity</div>
+          <div class="tbl-row">discount_amount</div>
+          <div class="tbl-row">tax_amount</div>
+          <div class="tbl-row">total_amount</div>
+          <div class="tbl-row">is_refunded</div>
+          <div class="tbl-row">refund_date</div>
+        </div>
+      </div>
+
+      <div class="tbl confirmed">
+        <div class="tbl-header">dim_user <span class="conf-label">confirmed</span></div>
+        <div class="tbl-body">
+          <div class="tbl-row"><span class="badge sk">SK</span> user_sk</div>
+          <div class="tbl-row"><span class="badge pk">SRC</span> user_id</div>
+          <div class="tbl-row">username</div>
+          <div class="tbl-row">status</div>
+          <div class="tbl-row">email</div>
+          <div class="tbl-row">phone</div>
+          <div class="tbl-row">created_at</div>
+        </div>
+      </div>
+
+      <div class="tbl confirmed">
+        <div class="tbl-header">dim_game <span class="conf-label">confirmed</span></div>
+        <div class="tbl-body">
+          <div class="tbl-row"><span class="badge sk">SK</span> game_sk</div>
+          <div class="tbl-row"><span class="badge pk">SRC</span> game_id</div>
+          <div class="tbl-row">game_name</div>
+          <div class="tbl-row added">✦ genre_name</div>
+          <div class="tbl-row">platform</div>
+          <div class="tbl-row">release_date</div>
+          <div class="tbl-row">rating</div>
+          <div class="tbl-row">price</div>
+          <div class="tbl-row">discount_percentage</div>
+          <div class="tbl-row">tax_percentage</div>
+        </div>
+      </div>
+
+      <div class="tbl confirmed">
+        <div class="tbl-header">dim_date <span class="conf-label">confirmed</span></div>
+        <div class="tbl-body">
+          <div class="tbl-row added"><span class="badge sk">SK</span> full_date</div>
+          <div class="tbl-row">day_of_week</div>
+          <div class="tbl-row">day_name</div>
+          <div class="tbl-row">week_number</div>
+          <div class="tbl-row">month_number</div>
+          <div class="tbl-row">month_name</div>
+          <div class="tbl-row">quarter</div>
+          <div class="tbl-row">year</div>
+          <div class="tbl-row">is_weekend</div>
+          <div class="tbl-row">is_holiday</div>
+        </div>
+      </div>
+
+      <div class="tbl confirmed">
+        <div class="tbl-header">dim_location <span class="conf-label">confirmed</span></div>
+        <div class="tbl-body">
+          <div class="tbl-row"><span class="badge sk">SK</span> location_sk</div>
+          <div class="tbl-row"><span class="badge pk">SRC</span> city_id</div>
+          <div class="tbl-row">city_name</div>
+          <div class="tbl-row">state_name</div>
+          <div class="tbl-row">country_name</div>
+          <div class="tbl-row">region</div>
+        </div>
+      </div>
+
+      <div class="tbl dim">
+        <div class="tbl-header">dim_payment</div>
+        <div class="tbl-body">
+          <div class="tbl-row"><span class="badge sk">SK</span> payment_sk</div>
+          <div class="tbl-row">payment_method</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- ══════════════ FACT 2: fact_game_stats ══════════════ -->
+  <div class="fact-group">
+    <div class="fact-label">Fact 2 — Game Stats</div>
+    <div class="tables-row">
+
+      <div class="tbl fact">
+        <div class="tbl-header">fact_game_stats</div>
+        <div class="tbl-body">
+          <div class="tbl-row"><span class="badge sk">SK</span> session_sk</div>
+          <div class="tbl-row"><span class="badge fk">FK</span> user_sk</div>
+          <div class="tbl-row"><span class="badge fk">FK</span> game_sk</div>
+          <div class="tbl-row"><span class="badge fk">FK</span> full_date</div>
+          <div class="tbl-row"><span class="badge fk">FK</span> location_sk</div>
+          <div class="tbl-row"><span class="badge fk">FK</span> device_sk</div>
+          <div class="tbl-row"><span class="badge pk">SRC</span> session_id</div>
+          <div class="tbl-row">hours_played</div>
+          <div class="tbl-row">session_count</div>
+        </div>
+      </div>
+
+      <div class="tbl confirmed">
+        <div class="tbl-header">dim_user <span class="conf-label">confirmed</span></div>
+        <div class="tbl-body">
+          <div class="tbl-row"><span class="badge sk">SK</span> user_sk</div>
+          <div class="tbl-row"><span class="badge pk">SRC</span> user_id</div>
+          <div class="tbl-row">username</div>
+          <div class="tbl-row">status</div>
+          <div class="tbl-row">email</div>
+          <div class="tbl-row">phone</div>
+          <div class="tbl-row">created_at</div>
+        </div>
+      </div>
+
+      <div class="tbl confirmed">
+        <div class="tbl-header">dim_game <span class="conf-label">confirmed</span></div>
+        <div class="tbl-body">
+          <div class="tbl-row"><span class="badge sk">SK</span> game_sk</div>
+          <div class="tbl-row"><span class="badge pk">SRC</span> game_id</div>
+          <div class="tbl-row">game_name</div>
+          <div class="tbl-row added">✦ genre_name</div>
+          <div class="tbl-row">platform</div>
+          <div class="tbl-row">release_date</div>
+          <div class="tbl-row">rating</div>
+          <div class="tbl-row">price</div>
+          <div class="tbl-row">discount_percentage</div>
+          <div class="tbl-row">tax_percentage</div>
+        </div>
+      </div>
+
+      <div class="tbl confirmed">
+        <div class="tbl-header">dim_date <span class="conf-label">confirmed</span></div>
+        <div class="tbl-body">
+          <div class="tbl-row added"><span class="badge sk">SK</span> full_date</div>
+          <div class="tbl-row">day_of_week</div>
+          <div class="tbl-row">day_name</div>
+          <div class="tbl-row">week_number</div>
+          <div class="tbl-row">month_number</div>
+          <div class="tbl-row">month_name</div>
+          <div class="tbl-row">quarter</div>
+          <div class="tbl-row">year</div>
+          <div class="tbl-row">is_weekend</div>
+          <div class="tbl-row">is_holiday</div>
+        </div>
+      </div>
+
+      <div class="tbl confirmed">
+        <div class="tbl-header">dim_location <span class="conf-label">confirmed</span></div>
+        <div class="tbl-body">
+          <div class="tbl-row"><span class="badge sk">SK</span> location_sk</div>
+          <div class="tbl-row"><span class="badge pk">SRC</span> city_id</div>
+          <div class="tbl-row">city_name</div>
+          <div class="tbl-row">state_name</div>
+          <div class="tbl-row">country_name</div>
+          <div class="tbl-row">region</div>
+        </div>
+      </div>
+
+      <div class="tbl dim">
+        <div class="tbl-header">dim_device</div>
+        <div class="tbl-body">
+          <div class="tbl-row"><span class="badge sk">SK</span> device_sk</div>
+          <div class="tbl-row">device_type</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- ══════════════ FACT 3: fact_trophies ══════════════ -->
+  <div class="fact-group">
+    <div class="fact-label">Fact 3 — Trophies</div>
+    <div class="tables-row">
+
+      <div class="tbl fact">
+        <div class="tbl-header">fact_trophies</div>
+        <div class="tbl-body">
+          <div class="tbl-row"><span class="badge sk">SK</span> trophy_event_sk</div>
+          <div class="tbl-row"><span class="badge fk">FK</span> user_sk</div>
+          <div class="tbl-row"><span class="badge fk">FK</span> game_sk</div>
+          <div class="tbl-row"><span class="badge fk">FK</span> trophy_sk</div>
+          <div class="tbl-row"><span class="badge fk">FK</span> full_date</div>
+          <div class="tbl-row"><span class="badge fk">FK</span> location_sk</div>
+          <div class="tbl-row">earned_date</div>
+          <div class="tbl-row">trophy_count</div>
+        </div>
+      </div>
+
+      <div class="tbl dim">
+        <div class="tbl-header">dim_trophy</div>
+        <div class="tbl-body">
+          <div class="tbl-row"><span class="badge sk">SK</span> trophy_sk</div>
+          <div class="tbl-row"><span class="badge pk">SRC</span> trophy_id</div>
+          <div class="tbl-row">trophy_name</div>
+          <div class="tbl-row">trophy_type</div>
+        </div>
+      </div>
+
+      <div class="tbl confirmed">
+        <div class="tbl-header">dim_user <span class="conf-label">confirmed</span></div>
+        <div class="tbl-body">
+          <div class="tbl-row"><span class="badge sk">SK</span> user_sk</div>
+          <div class="tbl-row"><span class="badge pk">SRC</span> user_id</div>
+          <div class="tbl-row">username</div>
+          <div class="tbl-row">status</div>
+          <div class="tbl-row">email</div>
+          <div class="tbl-row">phone</div>
+          <div class="tbl-row">created_at</div>
+        </div>
+      </div>
+
+      <div class="tbl confirmed">
+        <div class="tbl-header">dim_game <span class="conf-label">confirmed</span></div>
+        <div class="tbl-body">
+          <div class="tbl-row"><span class="badge sk">SK</span> game_sk</div>
+          <div class="tbl-row"><span class="badge pk">SRC</span> game_id</div>
+          <div class="tbl-row">game_name</div>
+          <div class="tbl-row added">✦ genre_name</div>
+          <div class="tbl-row">platform</div>
+          <div class="tbl-row">release_date</div>
+          <div class="tbl-row">rating</div>
+          <div class="tbl-row">price</div>
+          <div class="tbl-row">discount_percentage</div>
+          <div class="tbl-row">tax_percentage</div>
+        </div>
+      </div>
+
+      <div class="tbl confirmed">
+        <div class="tbl-header">dim_date <span class="conf-label">confirmed</span></div>
+        <div class="tbl-body">
+          <div class="tbl-row added"><span class="badge sk">SK</span> full_date</div>
+          <div class="tbl-row">day_of_week</div>
+          <div class="tbl-row">day_name</div>
+          <div class="tbl-row">week_number</div>
+          <div class="tbl-row">month_number</div>
+          <div class="tbl-row">month_name</div>
+          <div class="tbl-row">quarter</div>
+          <div class="tbl-row">year</div>
+          <div class="tbl-row">is_weekend</div>
+          <div class="tbl-row">is_holiday</div>
+        </div>
+      </div>
+
+      <div class="tbl confirmed">
+        <div class="tbl-header">dim_location <span class="conf-label">confirmed</span></div>
+        <div class="tbl-body">
+          <div class="tbl-row"><span class="badge sk">SK</span> location_sk</div>
+          <div class="tbl-row"><span class="badge pk">SRC</span> city_id</div>
+          <div class="tbl-row">city_name</div>
+          <div class="tbl-row">state_name</div>
+          <div class="tbl-row">country_name</div>
+          <div class="tbl-row">region</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LEGEND -->
+  <div style="display:flex;gap:14px;font-size:11px;color:var(--color-text-tertiary);flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--color-border-tertiary);">
+    <span><span class="badge sk">SK</span> Surrogate Key</span>
+    <span><span class="badge fk">FK</span> Foreign Key</span>
+    <span><span class="badge pk">SRC</span> Natural Key</span>
+    <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;background:#FAEEDA;border-radius:2px;display:inline-block;"></span>Fact</span>
+    <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;background:#E1F5EE;border-radius:2px;display:inline-block;"></span>Dimension</span>
+    <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;background:#E6F1FB;border:1px solid #378ADD;border-radius:2px;display:inline-block;"></span>Confirmed Dim</span>
+    <span style="color:var(--color-text-success);">✦ modified</span>
+  </div>
+
+</div>
